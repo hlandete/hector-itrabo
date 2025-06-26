@@ -23,7 +23,8 @@ const App = () => {
   const navigate = useNavigate()
   
   const closeModal = () => setOpen(false)
-  
+ 
+  // code-review
   const closeCard = () => {
 
   }
@@ -57,6 +58,7 @@ const App = () => {
     setOpen(true)
   }
 
+  //code-review
   const getMovie = async (id) => {
     const URL = `${ENDPOINT}/movie/${id}?api_key=${API_KEY}&append_to_response=videos`
 

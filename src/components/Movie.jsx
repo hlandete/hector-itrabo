@@ -3,6 +3,7 @@ import starredSlice from '../data/starredSlice'
 import watchLaterSlice from '../data/watchLaterSlice'
 import placeholder from '../assets/not-found-500X750.jpeg'
 
+//code-review
 const Movie = ({ movie, viewTrailer, closeCard }) => {
 
     const state = useSelector((state) => state)
@@ -12,6 +13,7 @@ const Movie = ({ movie, viewTrailer, closeCard }) => {
 
     const dispatch = useDispatch()
 
+    // code-review
     const myClickHandler = (e) => {
         if (!e) var e = window.event
         e.cancelBubble = true

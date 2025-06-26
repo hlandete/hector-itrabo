@@ -25,6 +25,7 @@ const WatchLater = ({viewTrailer}) => {
         ))}
         </div>
 
+        {/* code-review */}
         <footer className="text-center">
           <button className="btn btn-primary" onClick={() => dispatch(remveAllWatchLater())}>Empty list</button>
         </footer>
