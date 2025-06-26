@@ -13,6 +13,7 @@ const moviesSlice = createSlice({
     name: 'movies',
     initialState: { 
         movies: [],
+        totalPages: 1, // Initialize totalPages
         fetchStatus: '',
     },
     reducers: {},
@@ -20,6 +21,7 @@ const moviesSlice = createSlice({
         builder.addCase(fetchMovies.fulfilled, (state, action) => {
             const movies = action.payload.results || [] 
             state.movies = [...state.movies, ...movies]
+            state.totalPages = action.payload.total_pages || 1
             state.fetchStatus = 'success'
         }).addCase(fetchMovies.pending, (state) => {
             state.fetchStatus = 'loading'

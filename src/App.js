@@ -24,7 +24,6 @@ const App = () => {
   const [isOpen, setOpen] = useState(false)
   const [page, setPage] = useState(1) 
   const navigate = useNavigate()
-  
   const closeModal = () => setOpen(false)
 
 
@@ -75,8 +74,10 @@ const App = () => {
 
 
   useEffect(() => {
-      getMovies()
-  }, [page, searchQuery, dispatch])
+    if (page <= movies.totalPages) {
+        getMovies()
+    }
+}, [page, searchQuery, dispatch])
 
   return (
     <div className="App">
