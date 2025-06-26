@@ -3,7 +3,7 @@ import { Routes, Route, createSearchParams, useSearchParams, useNavigate } from 
 import { useDispatch, useSelector } from 'react-redux'
 import 'reactjs-popup/dist/index.css'
 import { fetchMovies } from './data/moviesSlice'
-import { ENDPOINT_SEARCH, ENDPOINT_DISCOVER, ENDPOINT, API_KEY } from './constants'
+import { ENDPOINT_SEARCH, ENDPOINT_DISCOVER } from './constants'
 import Header from './components/Header'
 import Movies from './components/Movies'
 import Starred from './components/Starred'
@@ -16,12 +16,13 @@ import Modal from './components/Modal'
 const App = () => {
 
   const state = useSelector((state) => state)
-  const { movies } = state  
+  const { movies } = state 
   const dispatch = useDispatch()
   const [searchParams, setSearchParams] = useSearchParams()
   const searchQuery = searchParams.get('search')
   const [videoKey, setVideoKey] = useState()
   const [isOpen, setOpen] = useState(false)
+  const [page, setPage] = useState(1) 
   const navigate = useNavigate()
   
   const closeModal = () => setOpen(false)
@@ -42,9 +43,22 @@ const App = () => {
     getSearchResults(query)
   }
 
+
   const getMovies = () => {
-    dispatch(fetchMovies({ query: searchQuery || null }))
+    dispatch(fetchMovies({ query: searchQuery || null, page }))
   }
+
+  const handleScroll = () => {
+    if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100) {
+      setPage((prevPage) => prevPage + 1) 
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
 
   const viewTrailer = async (movie) => {
     try {
@@ -59,9 +73,10 @@ const App = () => {
     }
   }
 
+
   useEffect(() => {
-    getMovies()
-  }, [])
+      getMovies()
+  }, [page, searchQuery, dispatch])
 
   return (
     <div className="App">

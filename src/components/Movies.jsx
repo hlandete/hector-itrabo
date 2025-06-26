@@ -5,7 +5,7 @@ const Movies = ({ movies, viewTrailer }) => {
 
     return (
         <div className="grid-container" data-testid="movies">
-            {movies.movies.results?.map((movie) => {
+            {movies.movies.map((movie) => {
                 return (
                     <Movie 
                         movie={movie} 
