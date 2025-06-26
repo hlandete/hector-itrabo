@@ -11,6 +11,7 @@ import WatchLater from './components/WatchLater'
 import YouTubePlayer from './components/YoutubePlayer'
 import './app.scss'
 import { fetchMovieDetails } from './api/api'
+import Modal from './components/Modal'
 
 const App = () => {
 
@@ -24,10 +25,7 @@ const App = () => {
   const navigate = useNavigate()
   
   const closeModal = () => setOpen(false)
-  
-  const closeCard = () => {
 
-  }
 
   const getSearchResults = (query) => {
     if (query !== '') {
@@ -70,16 +68,19 @@ const App = () => {
       <Header searchMovies={searchMovies} searchParams={searchParams} setSearchParams={setSearchParams} />
 
       <div className="container">
+
+        <Modal isOpen={isOpen} onClose={closeModal} className="modal"> 
         {videoKey ? (
           <YouTubePlayer
             videoKey={videoKey}
           />
         ) : (
           <div style={{padding: "30px"}}><h6>no trailer available. Try another movie</h6></div>
-        )}
+        )} </Modal>
+       
 
         <Routes>
-          <Route path="/" element={<Movies movies={movies} viewTrailer={viewTrailer} closeCard={closeCard} />} />
+          <Route path="/" element={<Movies movies={movies} viewTrailer={viewTrailer}  />} />
           <Route path="/starred" element={<Starred viewTrailer={viewTrailer} />} />
           <Route path="/watch-later" element={<WatchLater viewTrailer={viewTrailer} />} />
           <Route path="*" element={<h1 className="not-found">Page Not Found</h1>} />
