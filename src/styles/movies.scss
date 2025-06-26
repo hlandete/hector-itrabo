@@ -24,7 +24,7 @@
         -ms-transition: all .2s ease-in-out;
         -o-transition: all .2s ease-in-out;
         transition: all .2s ease-in-out;
-
+        max-width: 250px;
         @media (max-width: 480px) {
             transition: none;
         }

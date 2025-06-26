@@ -1,9 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { fetchDiscoverMovies, fetchSearchMovies } from "../api/api"
 
-export const fetchMovies = createAsyncThunk('fetch-movies', async (apiUrl) => {
-    const response = await fetch(apiUrl)
-    return response.json()
-})
+export const fetchMovies = createAsyncThunk('fetch-movies', async ({ query }) => {
+    if (query) {
+      return await fetchSearchMovies(query)
+    } else {
+      return await fetchDiscoverMovies()
+    }
+  })
 
 const moviesSlice = createSlice({
     name: 'movies',

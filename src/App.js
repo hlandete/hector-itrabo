@@ -10,6 +10,7 @@ import Starred from './components/Starred'
 import WatchLater from './components/WatchLater'
 import YouTubePlayer from './components/YoutubePlayer'
 import './app.scss'
+import { fetchMovieDetails } from './api/api'
 
 const App = () => {
 
@@ -44,29 +45,19 @@ const App = () => {
   }
 
   const getMovies = () => {
-    if (searchQuery) {
-        dispatch(fetchMovies(`${ENDPOINT_SEARCH}&query=`+searchQuery))
-    } else {
-        dispatch(fetchMovies(ENDPOINT_DISCOVER))
-    }
+    dispatch(fetchMovies({ query: searchQuery || null }))
   }
 
-  const viewTrailer = (movie) => {
-    getMovie(movie.id)
-    if (!videoKey) setOpen(true)
-    setOpen(true)
-  }
-
-  const getMovie = async (id) => {
-    const URL = `${ENDPOINT}/movie/${id}?api_key=${API_KEY}&append_to_response=videos`
-
-    setVideoKey(null)
-    const videoData = await fetch(URL)
-      .then((response) => response.json())
-
-    if (videoData.videos && videoData.videos.results.length) {
-      const trailer = videoData.videos.results.find(vid => vid.type === 'Trailer')
-      setVideoKey(trailer ? trailer.key : videoData.videos.results[0].key)
+  const viewTrailer = async (movie) => {
+    try {
+      const videoData = await fetchMovieDetails(movie.id)
+      if (videoData.videos && videoData.videos.results.length) {
+        const trailer = videoData.videos.results.find(vid => vid.type === 'Trailer')
+        setVideoKey(trailer ? trailer.key : videoData.videos.results[0].key)
+      }
+      setOpen(true)
+    } catch (error) {
+      console.error('Error fetching movie details:', error)
     }
   }
 
