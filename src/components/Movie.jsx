@@ -3,7 +3,7 @@ import starredSlice from '../data/starredSlice'
 import watchLaterSlice from '../data/watchLaterSlice'
 import placeholder from '../assets/not-found-500X750.jpeg'
 
-const Movie = ({ movie, viewTrailer, closeCard }) => {
+const Movie = ({ movie, viewTrailer }) => {
 
     const state = useSelector((state) => state)
     const { starred, watchLater } = state
@@ -12,7 +12,7 @@ const Movie = ({ movie, viewTrailer, closeCard }) => {
 
     const dispatch = useDispatch()
 
-    const myClickHandler = (e) => {
+    const closeCard = (e) => {
         if (!e) var e = window.event
         e.cancelBubble = true
         if (e.stopPropagation) e.stopPropagation()
@@ -20,7 +20,6 @@ const Movie = ({ movie, viewTrailer, closeCard }) => {
     }
 
     return (
-        <div className="wrapper col-3 col-sm-4 col-md-3 col-lg-3 col-xl-2">
         <div className="card" onClick={(e) => e.currentTarget.classList.add('opened')} >
             <div className="card-body text-center">
                 <div className="overlay" />
@@ -61,11 +60,10 @@ const Movie = ({ movie, viewTrailer, closeCard }) => {
             </div>
             <h6 className="title mobile-card">{movie.title}</h6>
             <h6 className="title">{movie.title}</h6>
-            <button type="button" className="close" onClick={(e) => myClickHandler(e)} aria-label="Close">
+            <button type="button" className="close" onClick={(e) => closeCard(e)} aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-    </div>        
     )
 }
 
