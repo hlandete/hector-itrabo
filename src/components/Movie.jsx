@@ -1,5 +1,3 @@
-// code-review
-
 import { useDispatch, useSelector } from 'react-redux'
 import starredSlice from '../data/starredSlice'
 import watchLaterSlice from '../data/watchLaterSlice'
@@ -14,6 +12,7 @@ const Movie = ({ movie, viewTrailer, closeCard }) => {
 
     const dispatch = useDispatch()
 
+    // code-review
     const myClickHandler = (e) => {
         if (!e) var e = window.event
         e.cancelBubble = true
